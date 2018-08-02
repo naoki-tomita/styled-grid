@@ -1,0 +1,9 @@
+{
+  "name": "styled-grid",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "styled-components": "^3.3.3"
+  }
+}

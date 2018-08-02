@@ -1,0 +1,42 @@
+<style>
+.grid-container {
+  display: grid;
+  grid-template-rows: 100px auto 50px;
+}
+.horizontal-line {
+  border: solid #000;
+  cursor: ns-resize;
+}
+</style>
+
+<div id="grid" class="grid-container">
+  <div>contents</div>
+  <div id="horizon" class="horizontal-line"></div>
+  <div>content</div>
+</div>
+<script>
+function getPixel(text) {
+  const px = Number.parseInt(text.split("px")[0]);
+  return Number.isNaN(px) ? 0 : px;
+}
+const grid = document.getElementById("grid");
+const horizon = document.getElementById("horizon");
+const defaultStyle = window.getComputedStyle(grid);
+const containerLinesPos = defaultStyle.gridTemplateRows.split(" ").map(getPixel);
+let moving = false;
+let lastY;
+horizon.addEventListener("mousedown", e => {
+  moving = true;
+  lastY = e.clientY;
+});
+document.addEventListener("mousemove", e => {
+  if (!moving) return;
+  const d = lastY - e.clientY;
+  containerLinesPos[0] = containerLinesPos[0] - d;
+  lastY = e.clientY;
+  grid.style.gridTemplateRows = containerLinesPos.map(x => `${x}px`).join(" ");
+});
+document.addEventListener("mouseup", () => {
+  moving = false;
+});
+</script>
